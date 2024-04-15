@@ -1,4 +1,4 @@
-#Task 3 - Star wars character (Public API)
+# Task 3 - Star wars character (Public API)
 - Public API: https://swapi.dev/
 - User can view all of the characters in a list view
   - If the user click on a character, app will show a few details (name, height, mass, ..) + all of the films as a list view 
