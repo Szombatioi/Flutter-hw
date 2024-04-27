@@ -1,11 +1,11 @@
 {
-    "name": "flutter_homework_start_23_2",
-    "short_name": "flutter_homework_start_23_2",
+    "name": "flutter_hf",
+    "short_name": "flutter_hf",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Star Ward Character - Flutter alapú szoftverfejlesztés házi feladat",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
