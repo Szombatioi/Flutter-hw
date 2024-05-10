@@ -78,8 +78,8 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       'Characters',
                       style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
                     ),

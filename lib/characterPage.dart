@@ -18,7 +18,11 @@ class _CharacterPageState extends State<CharacterPage> {
   _CharacterPageState(this.url) {
     HttpCommunication http = HttpCommunication();
     print("?");
-    http.getCharacter(url).then((value) => setState(() { print("?"); character = value; print(character?.name ?? "XD");}));
+    http.getCharacter(url).then((value) => setState(() {
+          print("?");
+          character = value;
+          print(character?.name ?? "XD");
+        }));
   }
 
   @override
@@ -37,7 +41,38 @@ class _CharacterPageState extends State<CharacterPage> {
             ),
             child: Stack(
               children: [
-                //...,
+                Column(
+                  children: [
+                    Center(
+                      child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40.0),
+                          child: Image.asset(
+                            'assets/unknown.png',
+                            fit: BoxFit.fitWidth,
+                            width: MediaQuery.of(context).size.width * 0.25,
+                          ),
+                        ),
+                        Text(
+                          character?.name ?? "",
+                          style: const TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),),
+                      ],
+
+                      ),
+                    ),
+
+                    // Expanded(
+                    //     child: ListView.separated(
+                    //         itemBuilder: itemBuilder,
+                    //         separatorBuilder: separatorBuilder,
+                    //         itemCount: itemCount)
+                    // )
+                  ],
+                ),
                 Positioned(
                   top: 32.0,
                   left: 8.0,
@@ -50,8 +85,6 @@ class _CharacterPageState extends State<CharacterPage> {
                   ),
                 ),
               ],
-            )
-        )
-    );
+            )));
   }
 }
