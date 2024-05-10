@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hf/http_communication.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'HTTP data/person.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +14,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     HttpCommunication http = HttpCommunication();
+    http.getCharacters();
     http.getMovies();
+
 
     return MaterialApp(
       title: 'Star Wars Characters',
@@ -22,26 +26,32 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primaryColor: Colors.white,
       ),
-      home: const Scaffold(
+      home: Scaffold(
         body: HomePage('Main Page'),
       ),
     );
   }
 }
 
-class HomePage extends StatelessWidget{
+class HomePage extends StatelessWidget {
   final String description;
-  const HomePage(this.description);
 
-  // @override
-  // Widget build(BuildContext context){
-  //   return Center(
-  //     child: Image.asset(
-  //       'assets/lightsabers.png',
-  //       fit: BoxFit.cover,
-  //       width: MediaQuery.of(context).size.width * 0.15,
-  //     ),
-  //   );
+  List<Person>? characters;
+  HomePage(this.description, {super.key}) {
+    characters = null;
+  }
+
+
+  static Future<HomePage> create(String description) async {
+    var instance = HomePage(description);
+    await instance._loadCharacters();
+    return instance;
+  }
+
+  Future<void> _loadCharacters() async {
+    HttpCommunication http = HttpCommunication();
+    characters = await http.getCharacters();
+  }
 
   static const Color bgTopColor = Color(0xFF1D6D38);
   static const Color bgBotColor = Color(0xFF282828);
@@ -80,43 +90,49 @@ class HomePage extends StatelessWidget{
               ),
             ),
             Expanded(
-              child: Container(
-                width: double.infinity,
-                child: ListView.separated(
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: const Text(
-                        'Example',
-                        style: TextStyle(
+                child: Container(
+              width: double.infinity,
+              child: ListView.separated(
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: const Text(
+                      'Example',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    onTap: () {},
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            if(! await launchUrl(Uri.parse('uri'))){
+                              
+                            }
+                          },
+                          icon: const Icon(Icons.info_outline),
                           color: Colors.white,
                         ),
-                      ),
-                      onTap: () {},
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.info_outline),
-                            color: Colors.white,
-                          ),
-                          IconButton(
-                            onPressed: (){},
-                            icon: const Icon(Icons.arrow_right),
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.white,),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.arrow_right),
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(
+                  color: Colors.white,
                 ),
-              )
-            ),
+              ),
+            )),
           ],
         ),
       ),
     );
   }
-  }
+}
