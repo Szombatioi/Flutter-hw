@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:dio/adapter.dart';
+//import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter_hf/HTTP data/film_response.dart';
 import 'package:flutter_hf/HTTP%20data/person_response.dart';
 import 'HTTP data/film.dart';

@@ -11,14 +11,8 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    HttpCommunication http = HttpCommunication();
-    http.getCharacters();
-    http.getMovies();
-
-
     return MaterialApp(
       title: 'Star Wars Characters',
       theme: ThemeData(
@@ -26,35 +20,29 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primaryColor: Colors.white,
       ),
-      home: Scaffold(
-        body: HomePage('Main Page'),
-      ),
+      home: const HomePage('Main Page'),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final String description;
 
+  const HomePage(this.description, {super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   List<Person>? characters;
-  HomePage(this.description, {super.key}) {
-    characters = null;
-  }
 
-
-  static Future<HomePage> create(String description) async {
-    var instance = HomePage(description);
-    await instance._loadCharacters();
-    return instance;
-  }
-
-  Future<void> _loadCharacters() async {
+  _HomePageState() {
     HttpCommunication http = HttpCommunication();
-    characters = await http.getCharacters();
+    http.getCharacters().then((value) => setState(() {
+          characters = value;
+        })); //async operation starts in the background
   }
-
-  static const Color bgTopColor = Color(0xFF1D6D38);
-  static const Color bgBotColor = Color(0xFF282828);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +54,7 @@ class HomePage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [bgTopColor, bgBotColor],
+            colors: [Color(0xFF1D6D38), Color(0xFF282828)],
             stops: [0.0, 0.25],
           ),
         ),
@@ -93,12 +81,13 @@ class HomePage extends StatelessWidget {
                 child: Container(
               width: double.infinity,
               child: ListView.separated(
-                itemCount: 5,
+                itemCount: characters!.length,
                 itemBuilder: (BuildContext context, int index) {
+                  final character = characters![index];
                   return ListTile(
-                    title: const Text(
-                      'Example',
-                      style: TextStyle(
+                    title: Text(
+                      character.name ?? "No name",
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -108,9 +97,9 @@ class HomePage extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            if(! await launchUrl(Uri.parse('uri'))){
-                              
-                            }
+                            // if(! await launchUrl(Uri.parse('uri'))){
+                            //
+                            // }
                           },
                           icon: const Icon(Icons.info_outline),
                           color: Colors.white,
