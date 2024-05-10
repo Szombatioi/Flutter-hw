@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hf/http_communication.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'characterPage.dart';
 import 'HTTP data/person.dart';
 
 void main() {
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         // useMaterial3: true,
         primaryColor: Colors.white,
+        fontFamily: "CarosBold", //TODO!!!
       ),
       home: const HomePage('Main Page'),
     );
@@ -58,59 +60,79 @@ class _HomePageState extends State<HomePage> {
             stops: [0.0, 0.25],
           ),
         ),
-        padding: const EdgeInsets.all(80.0),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Center(
-              child: Image.asset(
-                'assets/lightsabers.png',
-                fit: BoxFit.fitWidth,
-                width: MediaQuery.of(context).size.width * 0.25,
-              ),
-            ),
-            const SizedBox(height: 20), // Add spacing between image and text
-            const Text(
-              'Characters',
-              style: TextStyle(
-                fontSize: 32,
-                color: Colors.white,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40.0),
+                    child: Image.asset(
+                      'assets/lightsabers.png',
+                      fit: BoxFit.fitWidth,
+                      width: MediaQuery.of(context).size.width * 0.25,
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(40.0),
+                    child: Text(
+                      'Characters',
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
             Expanded(
-                child: Container(
-              width: double.infinity,
+              // Wrap the ListView with Expanded
               child: ListView.separated(
                 itemCount: characters!.length,
                 itemBuilder: (BuildContext context, int index) {
                   final character = characters![index];
-                  return ListTile(
-                    title: Text(
-                      character.name ?? "No name",
-                      style: const TextStyle(
-                        color: Colors.white,
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: ListTile(
+                      title: Text(
+                        character.name ?? "No name",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    onTap: () {},
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            // if(! await launchUrl(Uri.parse('uri'))){
-                            //
-                            // }
-                          },
-                          icon: const Icon(Icons.info_outline),
-                          color: Colors.white,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.arrow_right),
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
+                      onTap: () {},
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              launchUrl(Uri.parse('https://www.google.com/search?q=${character.name}')).then((value) => {
+                                if(!value) print("Web not working") //TODO
+                              });
+                            },
+                            icon: const Icon(Icons.info_outline),
+                            color: Colors.white,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                builder: (context) => CharacterPage(url: character.url!),
+                              ),
+                              );
+                              print("Navigated");
+                            },
+                            icon: const Icon(Icons.keyboard_arrow_right),
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    )
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>
@@ -118,10 +140,88 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                 ),
               ),
-            )),
+            ),
           ],
         ),
       ),
     );
   }
+
+// return Scaffold(
+//   body: Container(
+//     width: double.infinity,
+//     height: double.infinity,
+//     decoration: const BoxDecoration(
+//       gradient: LinearGradient(
+//         begin: Alignment.topCenter,
+//         end: Alignment.bottomCenter,
+//         colors: [Color(0xFF1D6D38), Color(0xFF282828)],
+//         stops: [0.0, 0.25],
+//       ),
+//     ),
+//     padding: const EdgeInsets.all(80.0),
+//     child: Column(
+//       mainAxisSize: MainAxisSize.max,
+//       children: [
+//         Center(
+//           child: Image.asset(
+//             'assets/lightsabers.png',
+//             fit: BoxFit.fitWidth,
+//             width: MediaQuery.of(context).size.width * 0.25,
+//           ),
+//         ),
+//         const SizedBox(height: 20), // Add spacing between image and text
+//         const Text(
+//           'Characters',
+//           style: TextStyle(
+//             fontSize: 32,
+//             color: Colors.white,
+//           ),
+//         ),
+//         Expanded(
+//             child: Container(
+//           width: double.infinity,
+//           child: ListView.separated(
+//             itemCount: characters!.length,
+//             itemBuilder: (BuildContext context, int index) {
+//               final character = characters![index];
+//               return ListTile(
+//                 title: Text(
+//                   character.name ?? "No name",
+//                   style: const TextStyle(
+//                     color: Colors.white,
+//                   ),
+//                 ),
+//                 onTap: () {},
+//                 trailing: Row(
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     IconButton(
+//                       onPressed: () {
+//                         // if(! await launchUrl(Uri.parse('uri'))){
+//                         //
+//                         // }
+//                       },
+//                       icon: const Icon(Icons.info_outline),
+//                       color: Colors.white,
+//                     ),
+//                     IconButton(
+//                       onPressed: () {},
+//                       icon: const Icon(Icons.arrow_right),
+//                       color: Colors.white,
+//                     ),
+//                   ],
+//                 ),
+//               );
+//             },
+//             separatorBuilder: (BuildContext context, int index) =>
+//                 const Divider(
+//               color: Colors.white,
+//             ),
+//           ),
+//         )),
+//       ],
+//     ),
+//   ),
+// );
 }

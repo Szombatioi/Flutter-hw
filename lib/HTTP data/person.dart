@@ -1,3 +1,5 @@
+import 'film.dart';
+
 class Person {
   String? name;
   String? height;
@@ -44,7 +46,14 @@ class Person {
     birthYear = json['birth_year'];
     gender = json['gender'];
     homeworld = json['homeworld'];
-    films = json['films'] != null ? json['films'].cast<String>() : [];
+
+    if (json['films'] != null) {
+      films = [];
+      json['films'].forEach((v) {
+        films?.add(v.toString());
+      });
+    }
+
     if (json['species'] != null) {
       species = [];
       json['species'].forEach((v) {

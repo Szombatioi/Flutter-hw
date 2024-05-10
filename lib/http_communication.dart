@@ -34,6 +34,15 @@ class HttpCommunication {
     return movies;
   }
 
+  Future<Person?> getCharacter(String url) async{
+    try{
+      Response res = await dio.get(url);
+      return Person.fromJson(res.data);
+    } catch(e){
+      print("Error: $e");
+    }
+  }
+
   Future<List<Person>?> getCharacters() async{
     List<Person>? characters;
     try{

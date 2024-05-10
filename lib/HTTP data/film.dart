@@ -31,20 +31,35 @@ class Film {
       this.url,});
 
   Film.fromJson(dynamic json) {
+    print("Beginning");
     title = json['title'];
+    print("Title done");
     episodeId = json['episode_id'];
+    print("EpisodeID done");
     openingCrawl = json['opening_crawl'];
+    print("opening done");
     director = json['director'];
+    print("director done");
     producer = json['producer'];
+    print("producer done");
     releaseDate = json['release_date'];
+    print("release done");
     characters = json['characters'] != null ? json['characters'].cast<String>() : [];
+    print("characters done");
     planets = json['planets'] != null ? json['planets'].cast<String>() : [];
+    print("planets done");
     starships = json['starships'] != null ? json['starships'].cast<String>() : [];
+    print("starships done");
     vehicles = json['vehicles'] != null ? json['vehicles'].cast<String>() : [];
+    print("vahicles done");
     species = json['species'] != null ? json['species'].cast<String>() : [];
+    print("species done");
     created = json['created'];
+    print("created done");
     edited = json['edited'];
+    print("edited done");
     url = json['url'];
+    print("url done");
   }
 
   Film copyWith({  String? title,
