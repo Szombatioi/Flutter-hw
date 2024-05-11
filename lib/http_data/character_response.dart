@@ -1,34 +1,34 @@
-import 'package:flutter_hf/HTTP data/film.dart';
+import 'data/character.dart';
 
-class FilmResponse {
+class CharacterResponse {
   num? count;
-  dynamic next;
+  String? next;
   dynamic previous;
-  List<Film>? results;
+  List<Character>? results;
 
-  FilmResponse({
+  CharacterResponse({
       this.count, 
       this.next, 
       this.previous, 
       this.results,});
 
-  FilmResponse.fromJson(dynamic json) {
+  CharacterResponse.fromJson(dynamic json) {
     count = json['count'];
     next = json['next'];
     previous = json['previous'];
     if (json['results'] != null) {
       results = [];
       json['results'].forEach((v) {
-        results?.add(Film.fromJson(v));
+        results?.add(Character.fromJson(v));
       });
     }
   }
 
-  FilmResponse copyWith({  num? count,
-    dynamic next,
+  CharacterResponse copyWith({  num? count,
+    String? next,
     dynamic previous,
-    List<Film>? results,
-  }) => FilmResponse(  count: count ?? this.count,
+    List<Character>? results,
+  }) => CharacterResponse(  count: count ?? this.count,
     next: next ?? this.next,
     previous: previous ?? this.previous,
     results: results ?? this.results,

@@ -3,10 +3,11 @@ import 'package:flutter_hf/http_communication.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'characterPage.dart';
-import 'HTTP data/person.dart';
+import 'http_data/data/character.dart';
 
 void main() {
   runApp(const MyApp());
+  HttpCommunication().startGatheringInfo(); //TODO find and remove basic http calls here
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +39,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HttpCommunication http = HttpCommunication();
-  List<Person>? characters;
+  List<Character>? characters;
   bool hasNext = false;
   int page = 1;
 
@@ -150,7 +151,7 @@ class _HomePageState extends State<HomePage> {
               child: TextButton(
                 onPressed: () {
                   page++;
-                  http.getCharacters(page: page).then((value) => characters?.addAll(value?.results as Iterable<Person>));
+                  http.getCharacters(page: page).then((value) => characters?.addAll(value?.results as Iterable<Character>));
                 },
                 child: const Text("Load more"),
               )

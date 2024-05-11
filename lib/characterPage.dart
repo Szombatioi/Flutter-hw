@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hf/HTTP%20data/person.dart';
+import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/http_communication.dart';
 
 class CharacterPage extends StatefulWidget {
@@ -13,7 +13,7 @@ class CharacterPage extends StatefulWidget {
 
 class _CharacterPageState extends State<CharacterPage> {
   final String url;
-  Person? character;
+  Character? character;
 
   _CharacterPageState(this.url) {
     HttpCommunication http = HttpCommunication();

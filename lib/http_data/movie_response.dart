@@ -1,34 +1,34 @@
-import 'person.dart';
+import 'data/movie.dart';
 
-class PersonResponse {
+class MovieResponse {
   num? count;
-  String? next;
+  dynamic next;
   dynamic previous;
-  List<Person>? results;
+  List<Movie>? results;
 
-  PersonResponse({
+  MovieResponse({
       this.count, 
       this.next, 
       this.previous, 
       this.results,});
 
-  PersonResponse.fromJson(dynamic json) {
+  MovieResponse.fromJson(dynamic json) {
     count = json['count'];
     next = json['next'];
     previous = json['previous'];
     if (json['results'] != null) {
       results = [];
       json['results'].forEach((v) {
-        results?.add(Person.fromJson(v));
+        results?.add(Movie.fromJson(v));
       });
     }
   }
 
-  PersonResponse copyWith({  num? count,
-    String? next,
+  MovieResponse copyWith({  num? count,
+    dynamic next,
     dynamic previous,
-    List<Person>? results,
-  }) => PersonResponse(  count: count ?? this.count,
+    List<Movie>? results,
+  }) => MovieResponse(  count: count ?? this.count,
     next: next ?? this.next,
     previous: previous ?? this.previous,
     results: results ?? this.results,
