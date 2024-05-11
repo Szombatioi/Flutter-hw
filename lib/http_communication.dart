@@ -43,19 +43,13 @@ class HttpCommunication {
     }
   }
 
-  Future<List<Person>?> getCharacters() async{
-    List<Person>? characters;
+  Future<PersonResponse?> getCharacters({int page = 1}) async{
     try{
-      Response res = await dio.get('https://swapi.dev/api/people');
-      PersonResponse response = PersonResponse.fromJson(res.data);
-      characters = response.results!;
-      for (var m in characters) {
-        print(m.name);
-      }
+      Response res = await dio.get('https://swapi.dev/api/people/?page=$page');
+      return PersonResponse.fromJson(res.data);
     } catch(e){
       print(e.toString());
     }
-    return characters;
   }
 
 }

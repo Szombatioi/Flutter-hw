@@ -37,13 +37,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  HttpCommunication http = HttpCommunication();
   List<Person>? characters;
+  bool hasNext = false;
+  int page = 1;
 
   _HomePageState() {
-    HttpCommunication http = HttpCommunication();
     http.getCharacters().then((value) => setState(() {
-          characters = value;
-        })); //async operation starts in the background
+          characters = value?.results;
+          hasNext = value?.next != null;
+        })
+    ); //async operation starts in the background
   }
 
   @override
@@ -141,87 +145,19 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            Visibility(
+              visible: hasNext,
+              child: TextButton(
+                onPressed: () {
+                  page++;
+                  http.getCharacters(page: page).then((value) => characters?.addAll(value?.results as Iterable<Person>));
+                },
+                child: const Text("Load more"),
+              )
+            ),
           ],
         ),
       ),
     );
   }
-
-// return Scaffold(
-//   body: Container(
-//     width: double.infinity,
-//     height: double.infinity,
-//     decoration: const BoxDecoration(
-//       gradient: LinearGradient(
-//         begin: Alignment.topCenter,
-//         end: Alignment.bottomCenter,
-//         colors: [Color(0xFF1D6D38), Color(0xFF282828)],
-//         stops: [0.0, 0.25],
-//       ),
-//     ),
-//     padding: const EdgeInsets.all(80.0),
-//     child: Column(
-//       mainAxisSize: MainAxisSize.max,
-//       children: [
-//         Center(
-//           child: Image.asset(
-//             'assets/lightsabers.png',
-//             fit: BoxFit.fitWidth,
-//             width: MediaQuery.of(context).size.width * 0.25,
-//           ),
-//         ),
-//         const SizedBox(height: 20), // Add spacing between image and text
-//         const Text(
-//           'Characters',
-//           style: TextStyle(
-//             fontSize: 32,
-//             color: Colors.white,
-//           ),
-//         ),
-//         Expanded(
-//             child: Container(
-//           width: double.infinity,
-//           child: ListView.separated(
-//             itemCount: characters!.length,
-//             itemBuilder: (BuildContext context, int index) {
-//               final character = characters![index];
-//               return ListTile(
-//                 title: Text(
-//                   character.name ?? "No name",
-//                   style: const TextStyle(
-//                     color: Colors.white,
-//                   ),
-//                 ),
-//                 onTap: () {},
-//                 trailing: Row(
-//                   mainAxisSize: MainAxisSize.min,
-//                   children: [
-//                     IconButton(
-//                       onPressed: () {
-//                         // if(! await launchUrl(Uri.parse('uri'))){
-//                         //
-//                         // }
-//                       },
-//                       icon: const Icon(Icons.info_outline),
-//                       color: Colors.white,
-//                     ),
-//                     IconButton(
-//                       onPressed: () {},
-//                       icon: const Icon(Icons.arrow_right),
-//                       color: Colors.white,
-//                     ),
-//                   ],
-//                 ),
-//               );
-//             },
-//             separatorBuilder: (BuildContext context, int index) =>
-//                 const Divider(
-//               color: Colors.white,
-//             ),
-//           ),
-//         )),
-//       ],
-//     ),
-//   ),
-// );
 }
