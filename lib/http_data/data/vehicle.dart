@@ -18,6 +18,8 @@ class Vehicle {
 
   List<Character>? pilots;
   List<Movie>? films;
+  List<String>? pilotsUrls;
+  List<String>? filmsUrls;
 
   String? created;
   String? edited;
@@ -54,25 +56,31 @@ class Vehicle {
     consumables = json['consumables'];
     vehicleClass = json['vehicle_class'];
 
-    if (json['films'] != null) {
-      films = [];
-      json['films'].forEach((v) {
-        if(DataStorage().movies.isEmpty){
-          //get all movies
-        }
-        films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
-      });
-    }
 
-    if (json['pilots'] != null) {
-      pilots = [];
-      json['pilots'].forEach((v) {
-        if(DataStorage().characters.isEmpty){
-          //get all movies
-        }
-        pilots?.add(DataStorage().characters.firstWhere((element) => element.url == v));
-      });
-    }
+    filmsUrls = json['films'].cast<String>();
+    films = [];
+    pilotsUrls = json['pilots'].cast<String>();
+    pilots = [];
+
+    // if (json['films'] != null) {
+    //   films = [];
+    //   json['films'].forEach((v) {
+    //     if(DataStorage().movies.isEmpty){
+    //       //get all movies
+    //     }
+    //     films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
+    //   });
+    // }
+    //
+    // if (json['pilots'] != null) {
+    //   pilots = [];
+    //   json['pilots'].forEach((v) {
+    //     if(DataStorage().characters.isEmpty){
+    //       //get all movies
+    //     }
+    //     pilots?.add(DataStorage().characters.firstWhere((element) => element.url == v));
+    //   });
+    // }
 
     created = json['created'];
     edited = json['edited'];

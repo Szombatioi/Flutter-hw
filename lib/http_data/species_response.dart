@@ -3,7 +3,7 @@ import 'package:flutter_hf/http_data/data/species.dart';
 class SpeciesResponse {
   int? count;
   String? next;
-  Null? previous;
+  String? previous;
   List<Species>? results;
 
   SpeciesResponse({this.count, this.next, this.previous, this.results});

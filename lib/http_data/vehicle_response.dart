@@ -3,7 +3,7 @@ import 'package:flutter_hf/http_data/data/vehicle.dart';
 class VehicleResponse {
   int? count;
   String? next;
-  Null? previous;
+  String? previous;
   List<Vehicle>? results;
 
   VehicleResponse({this.count, this.next, this.previous, this.results});

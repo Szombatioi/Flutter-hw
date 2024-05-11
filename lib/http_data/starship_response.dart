@@ -3,7 +3,7 @@ import 'package:flutter_hf/http_data/data/starship.dart';
 class StarshipsResponse {
   int? count;
   String? next;
-  Null? previous;
+  String? previous;
   List<Starship>? results;
 
   StarshipsResponse({this.count, this.next, this.previous, this.results});

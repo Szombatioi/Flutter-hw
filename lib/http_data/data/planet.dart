@@ -13,8 +13,12 @@ class Planet {
   String? terrain;
   String? surfaceWater;
   String? population;
-  List<Character>? residents; //TODO character
-  List<Movie>? films; //TODO movie
+
+  List<String>? residentsUrls;
+  List<String>? filmsUrls;
+  List<Character>? residents;
+  List<Movie>? films;
+
   String? created;
   String? edited;
   String? url;
@@ -46,25 +50,30 @@ class Planet {
     surfaceWater = json['surface_water'];
     population = json['population'];
 
-    if (json['residents'] != null) {
-      residents = [];
-      json['films'].forEach((v) {
-        if(DataStorage().characters.isEmpty){
-          //get all characters
-        }
-        residents?.add(DataStorage().characters.firstWhere((element) => element.url == v));
-      });
-    }
+    residentsUrls = json['residents'].cast<String>();
+    residents = [];
+    filmsUrls = json['films'].cast<String>();
+    films = [];
 
-    if (json['films'] != null) {
-      films = [];
-      json['films'].forEach((v) {
-        if(DataStorage().movies.isEmpty){
-          //get all characters
-        }
-        films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
-      });
-    }
+    // if (json['residents'] != null) {
+    //   residents = [];
+    //   json['films'].forEach((v) {
+    //     if(DataStorage().characters.isEmpty){
+    //       //get all characters
+    //     }
+    //     residents?.add(DataStorage().characters.firstWhere((element) => element.url == v));
+    //   });
+    // }
+    //
+    // if (json['films'] != null) {
+    //   films = [];
+    //   json['films'].forEach((v) {
+    //     if(DataStorage().movies.isEmpty){
+    //       //get all characters
+    //     }
+    //     films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
+    //   });
+    // }
 
 
     created = json['created'];

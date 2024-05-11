@@ -16,6 +16,7 @@ class DataStorage{
 
   DataStorage._internal();
 
+
   //Lists of elements
   List<Character> characters = [];
   List<Movie> movies = [];

@@ -16,6 +16,8 @@ class Species {
   String? language;
   List<Character>? people;
   List<Movie>? films;
+  List<String>? peopleUrls;
+  List<String>? filmsUrls;
   String? created;
   String? edited;
   String? url;
@@ -49,25 +51,30 @@ class Species {
     homeworld = json['homeworld'];
     language = json['language'];
 
-    if (json['films'] != null) {
-      films = [];
-      json['films'].forEach((v) {
-        if(DataStorage().movies.isEmpty){
-          //get all movies
-        }
-        films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
-      });
-    }
+    peopleUrls = json['people'].cast<String>();
+    people = [];
+    filmsUrls = json['films'].cast<String>();
+    films = [];
 
-    if (json['people'] != null) {
-      people = [];
-      json['people'].forEach((v) {
-        if(DataStorage().characters.isEmpty){
-          //get all movies
-        }
-        people?.add(DataStorage().characters.firstWhere((element) => element.url == v));
-      });
-    }
+    // if (json['films'] != null) {
+    //   films = [];
+    //   json['films'].forEach((v) {
+    //     if(DataStorage().movies.isEmpty){
+    //       //get all movies
+    //     }
+    //     films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
+    //   });
+    // }
+    //
+    // if (json['people'] != null) {
+    //   people = [];
+    //   json['people'].forEach((v) {
+    //     if(DataStorage().characters.isEmpty){
+    //       //get all movies
+    //     }
+    //     people?.add(DataStorage().characters.firstWhere((element) => element.url == v));
+    //   });
+    // }
 
     created = json['created'];
     edited = json['edited'];

@@ -17,8 +17,12 @@ class Starship {
   String? hyperdriveRating;
   String? mGLT;
   String? starshipClass;
+
   List<Character>? pilots;
   List<Movie>? films;
+  List<String>? pilotsUrls;
+  List<String>? filmsUrls;
+
   String? created;
   String? edited;
   String? url;
@@ -58,25 +62,30 @@ class Starship {
     mGLT = json['MGLT'];
     starshipClass = json['starship_class'];
 
-    if (json['films'] != null) {
-      films = [];
-      json['films'].forEach((v) {
-        if(DataStorage().movies.isEmpty){
-          //get all movies
-        }
-        films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
-      });
-    }
+    pilotsUrls = json['pilots'].cast<String>();
+    pilots = [];
+    filmsUrls = json['films'].cast<String>();
+    films = [];
 
-    if (json['pilots'] != null) {
-      pilots = [];
-      json['pilots'].forEach((v) {
-        if(DataStorage().characters.isEmpty){
-          //get all movies
-        }
-        pilots?.add(DataStorage().characters.firstWhere((element) => element.url == v));
-      });
-    }
+    // if (json['films'] != null) {
+    //   films = [];
+    //   json['films'].forEach((v) {
+    //     if(DataStorage().movies.isEmpty){
+    //       //get all movies
+    //     }
+    //     films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
+    //   });
+    // }
+    //
+    // if (json['pilots'] != null) {
+    //   pilots = [];
+    //   json['pilots'].forEach((v) {
+    //     if(DataStorage().characters.isEmpty){
+    //       //get all movies
+    //     }
+    //     pilots?.add(DataStorage().characters.firstWhere((element) => element.url == v));
+    //   });
+    // }
 
     created = json['created'];
     edited = json['edited'];

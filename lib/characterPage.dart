@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/http_communication.dart';
+import 'package:flutter_hf/http_data/data/movie.dart';
+import 'package:flutter_hf/http_data/data_storage.dart';
 
 class CharacterPage extends StatefulWidget {
   final String url;
@@ -13,20 +15,20 @@ class CharacterPage extends StatefulWidget {
 
 class _CharacterPageState extends State<CharacterPage> {
   final String url;
-  Character? character;
+  late Character character;
 
   _CharacterPageState(this.url) {
-    HttpCommunication http = HttpCommunication();
-    print("?");
-    http.getCharacter(url).then((value) => setState(() {
-          print("?");
-          character = value;
-          print(character?.name ?? "XD");
-        }));
+    character = DataStorage().characters.firstWhere((element) => element.url == url);
+    // if(character.movies.isEmpty){ //= they are not loaded yet
+    //   character.movies.addAll(DataStorage().movies);
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
+    for(var movie in character.movies){
+      print("Title: ${movie.title}");
+    }
     return Scaffold(
         body: Container(
             width: double.infinity,
@@ -54,7 +56,7 @@ class _CharacterPageState extends State<CharacterPage> {
                           ),
                         ),
                         Text(
-                          character?.name ?? "",
+                          character.name ?? "",
                           style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w500,
@@ -65,12 +67,19 @@ class _CharacterPageState extends State<CharacterPage> {
                       ),
                     ),
 
-                    // Expanded(
-                    //     child: ListView.separated(
-                    //         itemBuilder: itemBuilder,
-                    //         separatorBuilder: separatorBuilder,
-                    //         itemCount: itemCount)
-                    // )
+                    Expanded(
+                        child: ListView.separated(
+                            itemBuilder: (BuildContext context, int index) {
+                              final info = character.vehicles[index]; //TODO ide át kell hozni az information-t!
+                              return Text(info.name!);
+                            },
+                            itemCount: character.vehicles.length,
+                            separatorBuilder: (BuildContext context, int index) =>
+                            const Divider(
+                              color: Colors.white,
+                            ),
+                        )
+                    )
                   ],
                 ),
                 Positioned(

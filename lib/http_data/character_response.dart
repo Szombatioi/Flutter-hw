@@ -13,6 +13,7 @@ class CharacterResponse {
       this.results,});
 
   CharacterResponse.fromJson(dynamic json) {
+    //print(json);
     count = json['count'];
     next = json['next'];
     previous = json['previous'];
