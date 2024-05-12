@@ -29,7 +29,7 @@ class _CharacterPageState extends State<CharacterPage> {
 
   @override
   Widget build(BuildContext context) {
-    for(var m in character.movies) print(m.title);
+    for (var m in character.movies) print(m.title);
     var info = getCharacterInfo();
 
     return Scaffold(
@@ -82,13 +82,18 @@ class _CharacterPageState extends State<CharacterPage> {
                               if (index == 0) {
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
-                                  child: Text("Appearance", style: Theme.of(context).textTheme.bodySmall),
+                                  child: Text("Appearance",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall),
                                 );
                               }
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.5),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 2.5),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(info[index - 1][0]),
                                     Text(info[index - 1][1])
@@ -97,21 +102,28 @@ class _CharacterPageState extends State<CharacterPage> {
                               );
                             },
                             itemCount: info.length + 1,
-                            separatorBuilder: (BuildContext context, int index) => const Divider(
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const Divider(
                               color: Colors.white,
                             ),
                           ),
-                          const SizedBox(height: 20.0,),
+                          const SizedBox(
+                            height: 30.0,
+                          ),
                           ListView.separated(
                             shrinkWrap: true,
                             itemBuilder: (BuildContext context, int index) {
                               if (index == 0) {
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
-                                  child: Text("Movies", style: Theme.of(context).textTheme.bodySmall),
+                                  child: Text("Movies",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall),
                                 );
                               }
-                              var movie = character.movies[index-1];
+                              var movie = character.movies[index - 1];
                               return ListTile(
                                 title: Text(
                                   movie.title ?? "No name",
@@ -128,48 +140,144 @@ class _CharacterPageState extends State<CharacterPage> {
                               );
                             },
                             itemCount: character.movies.length + 1,
-                            separatorBuilder: (BuildContext context, int index) => const Divider(
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const Divider(
                               color: Colors.white,
                             ),
                           ),
-                          const SizedBox(height: 20.0,),
                           Visibility(
-                            visible: !character.vehicles.isEmpty,
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              if (index == 0) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(left: 20.0),
-                                  child: Text("Vehicles", style: Theme.of(context).textTheme.bodySmall),
-                                );
-                              }
-                              var vehicle = character.vehicles[index-1];
-                              return ListTile(
-                                title: Text(
-                                  vehicle.name ?? "No name",
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                onTap: () {},
-                                trailing: IconButton(
-                                  onPressed: () {
-                                    print("Navigated");
-                                  },
-                                  icon: const Icon(Icons.keyboard_arrow_right),
+                            visible: character.starships.isNotEmpty,
+                            child: Column(children: [
+                              const SizedBox(height: 30.0,),
+                              ListView.separated(
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (index == 0) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(left: 20.0),
+                                      child: Text("Starships",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall),
+                                    );
+                                  }
+                                  var starship = character.starships[index - 1];
+                                  return ListTile(
+                                    title: Text(
+                                      starship.name ?? "No name",
+                                      style:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                    ),
+                                    onTap: () {},
+                                    // trailing: IconButton(
+                                    //   onPressed: () {
+                                    //     print("Navigated");
+                                    //   },
+                                    //   icon:
+                                    //   const Icon(Icons.keyboard_arrow_right),
+                                    //   color: Colors.white,
+                                    // ),
+                                  );
+                                },
+                                itemCount: character.starships.length + 1,
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                const Divider(
                                   color: Colors.white,
                                 ),
-                              );
-                            },
-                            itemCount: character.vehicles.length + 1,
-                            separatorBuilder: (BuildContext context, int index) => const Divider(
-                              color: Colors.white,
-                            ),
-                          ),)
-
+                              ),
+                            ],),
+                          ),
+                          Visibility(
+                            visible: character.vehicles.isNotEmpty,
+                            child: Column(children: [
+                              const SizedBox(height: 30.0,),
+                              ListView.separated(
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (index == 0) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(left: 20.0),
+                                      child: Text("Vehicles",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall),
+                                    );
+                                  }
+                                  var vehicle = character.vehicles[index - 1];
+                                  return ListTile(
+                                    title: Text(
+                                      vehicle.name ?? "No name",
+                                      style:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                    ),
+                                    onTap: () {},
+                                    // trailing: IconButton(
+                                    //   onPressed: () {
+                                    //     print("Navigated");
+                                    //   },
+                                    //   icon:
+                                    //   const Icon(Icons.keyboard_arrow_right),
+                                    //   color: Colors.white,
+                                    // ),
+                                  );
+                                },
+                                itemCount: character.vehicles.length + 1,
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                const Divider(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],),
+                          ),
+                          Visibility(
+                            visible: character.species.isNotEmpty,
+                            child: Column(children: [
+                              const SizedBox(height: 30.0,),
+                              ListView.separated(
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (index == 0) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(left: 20.0),
+                                      child: Text("Species",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall),
+                                    );
+                                  }
+                                  var species = character.species[index - 1];
+                                  return ListTile(
+                                    title: Text(
+                                      species.name ?? "No name",
+                                      style:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                    ),
+                                    onTap: () {},
+                                    // trailing: IconButton(
+                                    //   onPressed: () {
+                                    //     print("Navigated");
+                                    //   },
+                                    //   icon:
+                                    //   const Icon(Icons.keyboard_arrow_right),
+                                    //   color: Colors.white,
+                                    // ),
+                                  );
+                                },
+                                itemCount: character.species.length + 1,
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                const Divider(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],),
+                          ),
                         ],
                       ),
                     )
-
                   ],
                 ),
                 Positioned(
