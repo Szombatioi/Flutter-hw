@@ -64,6 +64,10 @@ flutter:
     - assets/lightsabers.png
     - assets/unknown.png
     - assets/logo.png
+  fonts:
+    - family: 'StarWarsFont'
+      fonts:
+        - asset: assets/Caros.otf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -17,7 +17,13 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         // useMaterial3: true,
         primaryColor: Colors.white,
-        fontFamily: "CarosBold", //TODO!!!
+        fontFamily: 'StarWarsFont',
+        textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
+            bodyMedium: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+            bodySmall: TextStyle(color: Colors.white, fontSize: 14)
+
+        ),
       ),
       home: const SplashScreen(),
     );

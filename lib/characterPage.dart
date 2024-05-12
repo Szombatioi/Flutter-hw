@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/http_communication.dart';
 import 'package:flutter_hf/http_data/data/movie.dart';
@@ -18,7 +20,8 @@ class _CharacterPageState extends State<CharacterPage> {
   late Character character;
 
   _CharacterPageState(this.url) {
-    character = DataStorage().characters.firstWhere((element) => element.url == url);
+    character =
+        DataStorage().characters.firstWhere((element) => element.url == url);
     // if(character.movies.isEmpty){ //= they are not loaded yet
     //   character.movies.addAll(DataStorage().movies);
     // }
@@ -26,9 +29,9 @@ class _CharacterPageState extends State<CharacterPage> {
 
   @override
   Widget build(BuildContext context) {
-    for(var movie in character.movies){
-      print("Title: ${movie.title}");
-    }
+    for(var m in character.movies) print(m.title);
+    var info = getCharacterInfo();
+
     return Scaffold(
         body: Container(
             width: double.infinity,
@@ -46,40 +49,127 @@ class _CharacterPageState extends State<CharacterPage> {
                 Column(
                   children: [
                     Center(
-                      child: Column(children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 40.0),
-                          child: Image.asset(
-                            'assets/unknown.png',
-                            fit: BoxFit.fitWidth,
-                            width: MediaQuery.of(context).size.width * 0.25,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 50.0),
+                            child: Image.asset(
+                              'assets/unknown.png',
+                              fit: BoxFit.fitWidth,
+                              width: MediaQuery.of(context).size.width * 0.25,
+                            ),
                           ),
-                        ),
-                        Text(
-                          character.name ?? "",
-                          style: const TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),),
-                      ],
-
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 30.0),
+                            child: Text(
+                              character.name ?? "",
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-
                     Expanded(
-                        child: ListView.separated(
+                      child: ListView(
+                        children: [
+                          ListView.separated(
+                            shrinkWrap: true,
                             itemBuilder: (BuildContext context, int index) {
-                              final info = character.vehicles[index]; //TODO ide át kell hozni az information-t!
-                              return Text(info.name!);
+                              if (index == 0) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 20.0),
+                                  child: Text("Appearance", style: Theme.of(context).textTheme.bodySmall),
+                                );
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(info[index - 1][0]),
+                                    Text(info[index - 1][1])
+                                  ],
+                                ),
+                              );
                             },
-                            itemCount: character.vehicles.length,
-                            separatorBuilder: (BuildContext context, int index) =>
-                            const Divider(
+                            itemCount: info.length + 1,
+                            separatorBuilder: (BuildContext context, int index) => const Divider(
                               color: Colors.white,
                             ),
-                        )
+                          ),
+                          const SizedBox(height: 20.0,),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index == 0) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 20.0),
+                                  child: Text("Movies", style: Theme.of(context).textTheme.bodySmall),
+                                );
+                              }
+                              var movie = character.movies[index-1];
+                              return ListTile(
+                                title: Text(
+                                  movie.title ?? "No name",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                onTap: () {},
+                                trailing: IconButton(
+                                  onPressed: () {
+                                    print("Navigated");
+                                  },
+                                  icon: const Icon(Icons.keyboard_arrow_right),
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                            itemCount: character.movies.length + 1,
+                            separatorBuilder: (BuildContext context, int index) => const Divider(
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 20.0,),
+                          Visibility(
+                            visible: !character.vehicles.isEmpty,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index == 0) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 20.0),
+                                  child: Text("Vehicles", style: Theme.of(context).textTheme.bodySmall),
+                                );
+                              }
+                              var vehicle = character.vehicles[index-1];
+                              return ListTile(
+                                title: Text(
+                                  vehicle.name ?? "No name",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                onTap: () {},
+                                trailing: IconButton(
+                                  onPressed: () {
+                                    print("Navigated");
+                                  },
+                                  icon: const Icon(Icons.keyboard_arrow_right),
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                            itemCount: character.vehicles.length + 1,
+                            separatorBuilder: (BuildContext context, int index) => const Divider(
+                              color: Colors.white,
+                            ),
+                          ),)
+
+                        ],
+                      ),
                     )
+
                   ],
                 ),
                 Positioned(
@@ -95,5 +185,22 @@ class _CharacterPageState extends State<CharacterPage> {
                 ),
               ],
             )));
+  }
+
+  List<List<String>> getCharacterInfo() {
+    List<List<String>> info = [];
+    if (character.height != null)
+      info.add(["Height", "${character.height!} cm"]);
+    if (character.mass != null) info.add(["Mass", "${character.mass!} kg"]);
+    if (character.hairColor != null)
+      info.add(["Hair color", character.hairColor!]);
+    if (character.skinColor != null)
+      info.add(["Skin color", character.skinColor!]);
+    if (character.eyeColor != null)
+      info.add(["Eye color", character.eyeColor!]);
+    if (character.birthYear != null)
+      info.add(["Birth year", character.birthYear!]);
+    if (character.gender != null) info.add(["Gender", character.gender!]);
+    return info;
   }
 }

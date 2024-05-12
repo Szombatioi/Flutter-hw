@@ -38,22 +38,18 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 40.0),
+                    padding: const EdgeInsets.only(top: 50.0),
                     child: Image.asset(
                       'assets/lightsabers.png',
                       fit: BoxFit.fitWidth,
                       width: MediaQuery.of(context).size.width * 0.25,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(40.0),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
                     child: Text(
                       'Characters',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   )
                 ],
@@ -70,11 +66,7 @@ class _HomePageState extends State<HomePage> {
                       child: ListTile(
                         title: Text(
                           character.name ?? "No name",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         onTap: () {},
                         trailing: Row(

@@ -16,6 +16,7 @@ class Character {
   String? eyeColor;
   String? birthYear;
   String? gender;
+
   Planet? homeworld;
   String? homeworldUrl;
 
