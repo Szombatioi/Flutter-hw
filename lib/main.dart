@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hf/http_communication.dart';
 import 'package:flutter_hf/splashScreen.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
+  GetIt.I.registerSingleton<Dio>(Dio());
   runApp(const MyApp());
 }
 

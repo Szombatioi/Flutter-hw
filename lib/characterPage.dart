@@ -5,6 +5,7 @@ import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/http_communication.dart';
 import 'package:flutter_hf/http_data/data/movie.dart';
 import 'package:flutter_hf/http_data/data_storage.dart';
+import 'package:flutter_hf/moviesPage.dart';
 
 class CharacterPage extends StatefulWidget {
   final String url;
@@ -29,7 +30,6 @@ class _CharacterPageState extends State<CharacterPage> {
 
   @override
   Widget build(BuildContext context) {
-    for (var m in character.movies) print(m.title);
     var info = getCharacterInfo();
 
     return Scaffold(
@@ -129,9 +129,11 @@ class _CharacterPageState extends State<CharacterPage> {
                                   movie.title ?? "No name",
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
-                                onTap: () {},
+                                // onTap: () {},
                                 trailing: IconButton(
                                   onPressed: () {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(builder: (_) => MoviesPage(url: movie.url!)));
                                     print("Navigated");
                                   },
                                   icon: const Icon(Icons.keyboard_arrow_right),
@@ -169,7 +171,7 @@ class _CharacterPageState extends State<CharacterPage> {
                                       style:
                                       Theme.of(context).textTheme.bodyMedium,
                                     ),
-                                    onTap: () {},
+                                    // onTap: () {},
                                     // trailing: IconButton(
                                     //   onPressed: () {
                                     //     print("Navigated");
@@ -212,7 +214,7 @@ class _CharacterPageState extends State<CharacterPage> {
                                       style:
                                       Theme.of(context).textTheme.bodyMedium,
                                     ),
-                                    onTap: () {},
+                                    // onTap: () {},
                                     // trailing: IconButton(
                                     //   onPressed: () {
                                     //     print("Navigated");
@@ -255,7 +257,7 @@ class _CharacterPageState extends State<CharacterPage> {
                                       style:
                                       Theme.of(context).textTheme.bodyMedium,
                                     ),
-                                    onTap: () {},
+                                    // onTap: () {},
                                     // trailing: IconButton(
                                     //   onPressed: () {
                                     //     print("Navigated");
@@ -297,17 +299,12 @@ class _CharacterPageState extends State<CharacterPage> {
 
   List<List<String>> getCharacterInfo() {
     List<List<String>> info = [];
-    if (character.height != null)
-      info.add(["Height", "${character.height!} cm"]);
+    if (character.height != null) info.add(["Height", "${character.height!} cm"]);
     if (character.mass != null) info.add(["Mass", "${character.mass!} kg"]);
-    if (character.hairColor != null)
-      info.add(["Hair color", character.hairColor!]);
-    if (character.skinColor != null)
-      info.add(["Skin color", character.skinColor!]);
-    if (character.eyeColor != null)
-      info.add(["Eye color", character.eyeColor!]);
-    if (character.birthYear != null)
-      info.add(["Birth year", character.birthYear!]);
+    if (character.hairColor != null) info.add(["Hair color", character.hairColor!]);
+    if (character.skinColor != null) info.add(["Skin color", character.skinColor!]);
+    if (character.eyeColor != null) info.add(["Eye color", character.eyeColor!]);
+    if (character.birthYear != null) info.add(["Birth year", character.birthYear!]);
     if (character.gender != null) info.add(["Gender", character.gender!]);
     return info;
   }

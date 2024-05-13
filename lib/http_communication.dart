@@ -6,6 +6,7 @@ import 'package:flutter_hf/http_data/movie_response.dart';
 import 'package:flutter_hf/http_data/character_response.dart';
 import 'package:flutter_hf/http_data/planet_response.dart';
 import 'package:flutter_hf/http_data/species_response.dart';
+import 'package:get_it/get_it.dart';
 import 'http_data/data/movie.dart';
 import 'http_data/data/character.dart';
 import 'http_data/data/planet.dart';
@@ -13,7 +14,7 @@ import 'http_data/starship_response.dart';
 import 'http_data/vehicle_response.dart';
 
 class HttpCommunication {
-  final Dio dio = Dio();
+  final Dio dio = GetIt.I<Dio>();
   static final HttpCommunication _singleton = HttpCommunication._internal();
   bool finishedLoading = false;
 
