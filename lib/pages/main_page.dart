@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hf/http_data/data_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'characterPage.dart';
-import 'http_communication.dart';
-import 'http_data/data/character.dart';
+import '../http_data/data/character.dart';
+import 'character_page.dart';
 
 class HomePage extends StatefulWidget {
   final String description;
@@ -75,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                             IconButton(
                               onPressed: () {
                                 launchUrl(Uri.parse('https://www.google.com/search?q=${character.name}')).then((value) => {
-                                  if(!value) print("Web not working") //TODO
+                                  // if(!value) print("Web not working") //TODO
                                 });
                               },
                               icon: const Icon(Icons.info_outline),
@@ -89,7 +87,6 @@ class _HomePageState extends State<HomePage> {
                                     builder: (context) => CharacterPage(url: character.url!),
                                   ),
                                 );
-                                print("Navigated");
                               },
                               icon: const Icon(Icons.keyboard_arrow_right),
                               color: Colors.white,

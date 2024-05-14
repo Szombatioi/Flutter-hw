@@ -1,23 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hf/characterPage.dart';
+import 'package:flutter_hf/pages/character_page.dart';
 
-import 'http_data/data/movie.dart';
-import 'http_data/data_storage.dart';
+import '../http_data/data/movie.dart';
+import '../http_data/data_storage.dart';
 
 class MoviesPage extends StatefulWidget{
   final String url;
   const MoviesPage({super.key, required this.url});
 
   @override
-  State<MoviesPage> createState() => _MoviesPage(url);
+  State<MoviesPage> createState() => _MoviesPage();
 }
 
 class _MoviesPage extends State<MoviesPage>{
-  final String url;
+  late final String url;
   late Movie movie;
 
-  _MoviesPage(this.url) {
+  @override
+  void initState() {
+    url = widget.url;
     movie = DataStorage().movies.firstWhere((element) => element.url == url);
   }
 
@@ -131,7 +132,6 @@ class _MoviesPage extends State<MoviesPage>{
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(builder: (_) => CharacterPage(url: character.url!)));
-                                    print("Navigated");
                                   },
                                   icon: const Icon(Icons.keyboard_arrow_right),
                                   color: Colors.white,

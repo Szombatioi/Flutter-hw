@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hf/http_communication.dart';
 import 'package:flutter_hf/main.dart';
 
-import 'mainPage.dart';
+import 'main_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

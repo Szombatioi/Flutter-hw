@@ -1,11 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_hf/http_data/data/character.dart';
-import 'package:flutter_hf/http_communication.dart';
-import 'package:flutter_hf/http_data/data/movie.dart';
 import 'package:flutter_hf/http_data/data_storage.dart';
-import 'package:flutter_hf/moviesPage.dart';
+import 'movies_page.dart';
 
 class CharacterPage extends StatefulWidget {
   final String url;
@@ -13,19 +9,17 @@ class CharacterPage extends StatefulWidget {
   const CharacterPage({super.key, required this.url});
 
   @override
-  State<CharacterPage> createState() => _CharacterPageState(url);
+  State<CharacterPage> createState() => _CharacterPageState();
 }
 
 class _CharacterPageState extends State<CharacterPage> {
-  final String url;
+  late final String url;
   late Character character;
 
-  _CharacterPageState(this.url) {
-    character =
-        DataStorage().characters.firstWhere((element) => element.url == url);
-    // if(character.movies.isEmpty){ //= they are not loaded yet
-    //   character.movies.addAll(DataStorage().movies);
-    // }
+  @override
+  void initState() {
+    url = widget.url;
+    character = DataStorage().characters.firstWhere((element) => element.url == url);
   }
 
   @override
@@ -134,7 +128,6 @@ class _CharacterPageState extends State<CharacterPage> {
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(builder: (_) => MoviesPage(url: movie.url!)));
-                                    print("Navigated");
                                   },
                                   icon: const Icon(Icons.keyboard_arrow_right),
                                   color: Colors.white,
