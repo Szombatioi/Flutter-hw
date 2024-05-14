@@ -7,22 +7,16 @@ import 'package:flutter_hf/http_data/character_response.dart';
 import 'package:flutter_hf/http_data/planet_response.dart';
 import 'package:flutter_hf/http_data/species_response.dart';
 import 'package:get_it/get_it.dart';
-import 'http_data/data/movie.dart';
-import 'http_data/data/character.dart';
 import 'http_data/data/planet.dart';
 import 'http_data/starship_response.dart';
 import 'http_data/vehicle_response.dart';
 
 class HttpCommunication {
   final Dio dio = GetIt.I<Dio>();
-  static final HttpCommunication _singleton = HttpCommunication._internal();
+  final DataStorage dataStorage = GetIt.I<DataStorage>();
   bool finishedLoading = false;
 
-  factory HttpCommunication(){
-    return _singleton;
-  }
-
-  HttpCommunication._internal(){
+  HttpCommunication(){
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (HttpClient client) {
       client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
       return client;
@@ -37,21 +31,21 @@ class HttpCommunication {
       try{
         Response res = await dio.get('https://swapi.dev/api/people/?page=${page++}');
         CharacterResponse characterResponse = CharacterResponse.fromJson(res.data);
-        DataStorage().characters.addAll(characterResponse.results!);
+        dataStorage.characters.addAll(characterResponse.results!);
       } catch(e){
         print(e);
         run = false;
       }
     }
-    // print("Charactercount: ${DataStorage().characters.length}");
-    // for (var element in DataStorage().characters) {print(element.url);}
+    // print("Character count: ${dataStorage.characters.length}");
+    // for (var element in dataStorage.characters) {print(element.url);}
 
     print("Movies loading");
     Response res = await dio.get('https://swapi.dev/api/films');
     MovieResponse movieResponse = MovieResponse.fromJson(res.data);
-    DataStorage().movies.addAll(movieResponse.results!);
-    // print("Movies count: ${DataStorage().movies.length}");
-    // for (var element in DataStorage().movies) {print(element.url);}
+    dataStorage.movies.addAll(movieResponse.results!);
+    // print("Movies count: ${dataStorage.movies.length}");
+    // for (var element in dataStorage.movies) {print(element.url);}
 
     print("Planets loading");
     run = true;
@@ -60,14 +54,14 @@ class HttpCommunication {
       try{
         Response res = await dio.get('https://swapi.dev/api/planets/?page=${page++}');
         PlanetResponse planetResponse = PlanetResponse.fromJson(res.data!);
-        DataStorage().planets.addAll(planetResponse.results!);
+        dataStorage.planets.addAll(planetResponse.results!);
       } catch(e){
         //print(e);
         run = false;
       }
     }
-    // print("Planets count: ${DataStorage().planets.length}");
-    // for (var element in DataStorage().planets) {print(element.url);}
+    // print("Planets count: ${dataStorage.planets.length}");
+    // for (var element in dataStorage.planets) {print(element.url);}
 
     print("Species loading");
     run = true;
@@ -76,14 +70,14 @@ class HttpCommunication {
       try{
         Response res = await dio.get('https://swapi.dev/api/species/?page=${page++}');
         SpeciesResponse speciesResponse = SpeciesResponse.fromJson(res.data);
-        DataStorage().species.addAll(speciesResponse.results!);
+        dataStorage.species.addAll(speciesResponse.results!);
       } catch(e){
         print(e);
         run = false;
       }
     }
-    // print("Speices count: ${DataStorage().species.length}");
-    // for (var element in DataStorage().species) {print(element.url);}
+    // print("Species count: ${dataStorage.species.length}");
+    // for (var element in dataStorage.species) {print(element.url);}
 
     print("Starships loading");
     run = true;
@@ -92,13 +86,13 @@ class HttpCommunication {
       try{
         Response res = await dio.get('https://swapi.dev/api/starships/?page=${page++}');
         StarshipsResponse starshipsResponse = StarshipsResponse.fromJson(res.data);
-        DataStorage().starships.addAll(starshipsResponse.results!);
+        dataStorage.starships.addAll(starshipsResponse.results!);
       } catch(e){
         run = false;
       }
     }
-    // print("Starships count: ${DataStorage().starships.length}");
-    // for (var element in DataStorage().starships) {print(element.url);}
+    // print("Starships count: ${dataStorage.starships.length}");
+    // for (var element in dataStorage.starships) {print(element.url);}
 
     print("Vehicles loading");
     run = true;
@@ -107,53 +101,53 @@ class HttpCommunication {
       try{
         Response res = await dio.get('https://swapi.dev/api/vehicles/?page=${page++}');
         VehicleResponse vehicleResponse = VehicleResponse.fromJson(res.data);
-        DataStorage().vehicles.addAll(vehicleResponse.results!);
+        dataStorage.vehicles.addAll(vehicleResponse.results!);
       } catch(e){
         run = false;
       }
     }
-    // print("Vehicles count: ${DataStorage().vehicles.length}");
-    // for (var element in DataStorage().vehicles) {print(element.url);}
+    // print("Vehicles count: ${dataStorage.vehicles.length}");
+    // for (var element in dataStorage.vehicles) {print(element.url);}
 
     print("###Connecting lists###");
     print("Connecting characters");
     //Characters
-    for(var character in DataStorage().characters){
+    for(var character in dataStorage.characters){
       if(character.homeworld == null){
-        HttpCommunication().getPlanet(character.homeworldUrl!).then((value) => character.homeworld = value);
+        getPlanet(character.homeworldUrl!).then((value) => character.homeworld = value);
       }
       if(character.movies.isEmpty){
         for(var url in character.moviesUrls!){
-          character.movies.add(DataStorage().movies.firstWhere((element) => element.url == url));
+          character.movies.add(dataStorage.movies.firstWhere((element) => element.url == url));
         }
       }
 
       if(character.vehicles.isEmpty){
         for(var url in character.vehiclesUrls!){
-          character.vehicles.add(DataStorage().vehicles.firstWhere((element) => element.url == url));
+          character.vehicles.add(dataStorage.vehicles.firstWhere((element) => element.url == url));
         }
       }
 
       if(character.species.isEmpty){
         for(var url in character.speciesUrls!){
-          character.species.add(DataStorage().species.firstWhere((element) => element.url == url));
+          character.species.add(dataStorage.species.firstWhere((element) => element.url == url));
         }
       }
 
       if(character.starships.isEmpty){
         for(var url in character.starshipsUrls!){
-          character.starships.add(DataStorage().starships.firstWhere((element) => element.url == url));
+          character.starships.add(dataStorage.starships.firstWhere((element) => element.url == url));
         }
       }
     }
 
     print("Connecting movies");
     //Movies - characters, planets, starships, vehicles, species
-    for(var movie in DataStorage().movies){
+    for(var movie in dataStorage.movies){
       if(movie.characters!.isEmpty){
         try{
           for(var url in movie.charactersUrls!){
-            movie.characters?.add(DataStorage().characters.firstWhere((element) => element.url == url));
+            movie.characters?.add(dataStorage.characters.firstWhere((element) => element.url == url));
           }
         }catch(e){
           print("Error was here: $e");
@@ -163,7 +157,7 @@ class HttpCommunication {
       if(movie.planets!.isEmpty){
         try{
         for(var url in movie.planetsUrls!){
-          movie.planets?.add(DataStorage().planets.firstWhere((element) => element.url == url));
+          movie.planets?.add(dataStorage.planets.firstWhere((element) => element.url == url));
         }}catch(e){
           print("Error: $e");
         }
@@ -172,7 +166,7 @@ class HttpCommunication {
       if(movie.starships!.isEmpty){
         try{
         for(var url in movie.starshipsUrls!){
-          movie.starships?.add(DataStorage().starships.firstWhere((element) => element.url == url));
+          movie.starships?.add(dataStorage.starships.firstWhere((element) => element.url == url));
         }}catch(e){
           print("Error: $e");
         }
@@ -181,7 +175,7 @@ class HttpCommunication {
       if(movie.vehicles!.isEmpty){
         try{
         for(var url in movie.vehiclesUrls!){
-          movie.vehicles?.add(DataStorage().vehicles.firstWhere((element) => element.url == url));
+          movie.vehicles?.add(dataStorage.vehicles.firstWhere((element) => element.url == url));
         }}catch(e){
           print("Error: $e");
         }
@@ -190,7 +184,7 @@ class HttpCommunication {
       if(movie.species!.isEmpty){
         try{
         for(var url in movie.speciesUrls!){
-          movie.species?.add(DataStorage().species.firstWhere((element) => element.url == url));
+          movie.species?.add(dataStorage.species.firstWhere((element) => element.url == url));
         }}catch(e){
           print("Error: $e");
         }
@@ -199,66 +193,66 @@ class HttpCommunication {
 
     print("Connecting species");
     //Species - films, people
-    for(var species in DataStorage().species) {
+    for(var species in dataStorage.species) {
       if (species.people!.isEmpty) {
         for (var url in species.peopleUrls!) {
           species.people?.add(
-              DataStorage().characters.firstWhere((element) => element.url == url));
+              dataStorage.characters.firstWhere((element) => element.url == url));
         }
       }
 
       if (species.films!.isEmpty) {
         for (var url in species.filmsUrls!) {
           species.films?.add(
-              DataStorage().movies.firstWhere((element) => element.url == url));
+              dataStorage.movies.firstWhere((element) => element.url == url));
         }
       }
     }
 
     print("Connecting vehicles");
     //Vehicles - films, pilots
-    for(var vehicle in DataStorage().vehicles) {
+    for(var vehicle in dataStorage.vehicles) {
       if (vehicle.pilots!.isEmpty) {
         for (var url in vehicle.pilotsUrls!) {
-          vehicle.pilots?.add(DataStorage().characters.firstWhere((element) => element.url == url));
+          vehicle.pilots?.add(dataStorage.characters.firstWhere((element) => element.url == url));
         }
       }
 
       if (vehicle.films!.isEmpty) {
         for (var url in vehicle.filmsUrls!) {
-          vehicle.films?.add(DataStorage().movies.firstWhere((element) => element.url == url));
+          vehicle.films?.add(dataStorage.movies.firstWhere((element) => element.url == url));
         }
       }
     }
 
     print("Connecting starships");
     //Starships
-    for(var starship in DataStorage().starships) {
+    for(var starship in dataStorage.starships) {
       if (starship.pilots!.isEmpty) {
         for (var url in starship.pilotsUrls!) {
-          starship.pilots?.add(DataStorage().characters.firstWhere((element) => element.url == url));
+          starship.pilots?.add(dataStorage.characters.firstWhere((element) => element.url == url));
         }
       }
 
       if (starship.films!.isEmpty) {
         for (var url in starship.filmsUrls!) {
-          starship.films?.add(DataStorage().movies.firstWhere((element) => element.url == url));
+          starship.films?.add(dataStorage.movies.firstWhere((element) => element.url == url));
         }
       }
     }
 
     print("Connecting planets");
     //Planets
-    for(var planet in DataStorage().planets) {
+    for(var planet in dataStorage.planets) {
       if (planet.residents!.isEmpty) {
         for (var url in planet.residentsUrls!) {
-          planet.residents?.add(DataStorage().characters.firstWhere((element) => element.url == url));
+          planet.residents?.add(dataStorage.characters.firstWhere((element) => element.url == url));
         }
       }
 
       if (planet.films!.isEmpty) {
         for (var url in planet.filmsUrls!) {
-          planet.films?.add(DataStorage().movies.firstWhere((element) => element.url == url));
+          planet.films?.add(dataStorage.movies.firstWhere((element) => element.url == url));
         }
       }
     }

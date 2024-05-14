@@ -8,15 +8,6 @@ import 'data/vehicle.dart';
 
 /// Singleton class to store all elements we need.
 class DataStorage{
-  static final DataStorage _singleton = DataStorage._internal();
-
-  factory DataStorage(){
-    return _singleton;
-  }
-
-  DataStorage._internal();
-
-
   //Lists of elements
   List<Character> characters = [];
   List<Movie> movies = [];

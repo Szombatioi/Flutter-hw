@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hf/http_data/data_storage.dart';
+import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../http_data/data/character.dart';
@@ -15,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Character>? characters = DataStorage().characters;
+  List<Character>? characters = GetIt.I<DataStorage>().characters;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

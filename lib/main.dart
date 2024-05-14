@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hf/http_communication.dart';
+import 'package:flutter_hf/http_data/data_storage.dart';
 import 'package:flutter_hf/pages/splash_screen.dart';
 import 'package:get_it/get_it.dart';
 
 void main() {
   GetIt.I.registerSingleton<Dio>(Dio());
-  
+  GetIt.I.registerSingleton<DataStorage>(DataStorage());
+  GetIt.I.registerSingleton<HttpCommunication>(HttpCommunication());
   runApp(const MyApp());
 }
 

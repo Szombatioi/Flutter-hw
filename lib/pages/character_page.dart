@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/http_data/data_storage.dart';
+import 'package:get_it/get_it.dart';
 import 'movies_page.dart';
 
 class CharacterPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _CharacterPageState extends State<CharacterPage> {
   @override
   void initState() {
     url = widget.url;
-    character = DataStorage().characters.firstWhere((element) => element.url == url);
+    character = GetIt.I<DataStorage>().characters.firstWhere((element) => element.url == url);
   }
 
   @override
