@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hf/pages/character_page.dart';
+import 'package:flutter_hf/pages/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 import '../http_data/data/movie.dart';
@@ -74,6 +75,7 @@ class _MoviesPage extends State<MoviesPage>{
                         children: [
                           ListView.separated(
                             shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
                               if (index == 0) {
                                 return Padding(
@@ -112,6 +114,7 @@ class _MoviesPage extends State<MoviesPage>{
                           ),
                           ListView.separated(
                             shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
                               if (index == 0) {
                                 return Padding(
@@ -152,6 +155,7 @@ class _MoviesPage extends State<MoviesPage>{
                               const SizedBox(height: 30.0,),
                               ListView.separated(
                                 shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
                                   if (index == 0) {
                                     return Padding(
@@ -195,6 +199,7 @@ class _MoviesPage extends State<MoviesPage>{
                               const SizedBox(height: 30.0,),
                               ListView.separated(
                                 shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
                                   if (index == 0) {
                                     return Padding(
@@ -238,6 +243,7 @@ class _MoviesPage extends State<MoviesPage>{
                               const SizedBox(height: 30.0,),
                               ListView.separated(
                                 shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
                                   if (index == 0) {
                                     return Padding(
@@ -280,17 +286,7 @@ class _MoviesPage extends State<MoviesPage>{
                     )
                   ],
                 ),
-                Positioned(
-                  top: 32.0,
-                  left: 8.0,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.keyboard_arrow_left),
-                    color: Colors.white,
-                  ),
-                ),
+                MyBackButton(),
               ],
             )
         )

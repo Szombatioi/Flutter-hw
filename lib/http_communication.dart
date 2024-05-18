@@ -23,7 +23,7 @@ class HttpCommunication {
     };
   }
 
-  Future<void> startLoading() async{
+  Future<void> loadCharacters() async{
     print("Characters loading");
     int page = 1;
     bool run = true;
@@ -33,23 +33,26 @@ class HttpCommunication {
         CharacterResponse characterResponse = CharacterResponse.fromJson(res.data);
         dataStorage.characters.addAll(characterResponse.results!);
       } catch(e){
-        print(e);
         run = false;
       }
     }
     // print("Character count: ${dataStorage.characters.length}");
     // for (var element in dataStorage.characters) {print(element.url);}
+  }
 
+  Future<void> loadMovies() async {
     print("Movies loading");
     Response res = await dio.get('https://swapi.dev/api/films');
     MovieResponse movieResponse = MovieResponse.fromJson(res.data);
     dataStorage.movies.addAll(movieResponse.results!);
     // print("Movies count: ${dataStorage.movies.length}");
     // for (var element in dataStorage.movies) {print(element.url);}
+  }
 
+  Future<void> loadPlanets() async {
     print("Planets loading");
-    run = true;
-    page = 1;
+    bool run = true;
+    int page = 1;
     while(run){
       try{
         Response res = await dio.get('https://swapi.dev/api/planets/?page=${page++}');
@@ -62,10 +65,12 @@ class HttpCommunication {
     }
     // print("Planets count: ${dataStorage.planets.length}");
     // for (var element in dataStorage.planets) {print(element.url);}
+  }
 
+  Future<void> loadSpecies() async{
     print("Species loading");
-    run = true;
-    page = 1;
+    bool run = true;
+    int page = 1;
     while(run){
       try{
         Response res = await dio.get('https://swapi.dev/api/species/?page=${page++}');
@@ -78,10 +83,12 @@ class HttpCommunication {
     }
     // print("Species count: ${dataStorage.species.length}");
     // for (var element in dataStorage.species) {print(element.url);}
+  }
 
+  Future<void> loadStarships() async{
     print("Starships loading");
-    run = true;
-    page = 1;
+    bool run = true;
+    int page = 1;
     while(run){
       try{
         Response res = await dio.get('https://swapi.dev/api/starships/?page=${page++}');
@@ -93,10 +100,12 @@ class HttpCommunication {
     }
     // print("Starships count: ${dataStorage.starships.length}");
     // for (var element in dataStorage.starships) {print(element.url);}
+  }
 
+  Future<void> loadVehicles() async{
     print("Vehicles loading");
-    run = true;
-    page = 1;
+    bool run = true;
+    int page = 1;
     while(run){
       try{
         Response res = await dio.get('https://swapi.dev/api/vehicles/?page=${page++}');
@@ -108,6 +117,20 @@ class HttpCommunication {
     }
     // print("Vehicles count: ${dataStorage.vehicles.length}");
     // for (var element in dataStorage.vehicles) {print(element.url);}
+  }
+
+  Future<void> startLoading() async{
+    List<Future<void>> loaders = [
+      loadCharacters(),
+      loadMovies(),
+      loadPlanets(),
+      loadSpecies(),
+      loadStarships(),
+      loadVehicles()
+    ];
+
+    await Future.wait(loaders);
+
 
     print("###Connecting lists###");
     print("Connecting characters");
