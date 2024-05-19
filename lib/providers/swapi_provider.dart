@@ -36,16 +36,15 @@ class SwapiProvider with ChangeNotifier{
   }
 
   Future<void> loadCharacterInfo(Character character) async{
-    log("Character: ${character.name}");
+    List<Future<void>> loaders = [
+      http.loadMoviesForCharacter(character).then((value) => movies = value),
+      http.loadSpeciesForCharacter(character).then((value) => species = value),
+      http.loadVehiclesForCharacter(character).then((value) => vehicles = value),
+      http.loadStarshipsForCharacter(character).then((value) => starships = value),
+    ];
+
     isLoading = true;
-    log("Loading movies for character");
-    movies = await http.loadMoviesForCharacter(character);
-    log("Loading species for character");
-    species = await http.loadSpeciesForCharacter(character);
-    log("Loading vehicles for character");
-    vehicles = await http.loadVehiclesForCharacter(character);
-    log("Loading starships for character");
-    starships = await http.loadStarshipsForCharacter(character);
+    await Future.wait(loaders);
     isLoading = false;
     
     log("${movies.length}");
@@ -57,16 +56,16 @@ class SwapiProvider with ChangeNotifier{
   }
 
   Future<void> loadMovieInfo(Movie movie) async{
+    List<Future<void>> loaders = [
+      http.loadCharactersForMovie(movie).then((value) => characters = value),
+      http.loadSpeciesForMovie(movie).then((value) => species = value),
+      http.loadVehiclesForMovie(movie).then((value) => vehicles = value),
+      http.loadStarshipsForMovie(movie).then((value) => starships = value),
+    ];
+
     isLoading = true;
-    characters = await http.loadCharactersForMovie(movie);
-    log("Loading species for character");
-    species = await http.loadSpeciesForMovie(movie);
-    log("Loading vehicles for character");
-    vehicles = await http.loadVehiclesForMovie(movie);
-    log("Loading starships for character");
-    starships = await http.loadStarshipsForMovie(movie);
+    await Future.wait(loaders);
     isLoading = false;
-    log("Finished loading movie info");
   }
 
   Future<bool> assetExists(String path) async{
