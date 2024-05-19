@@ -11,12 +11,12 @@ import 'http_data/data/planet.dart';
 import 'http_data/starship_response.dart';
 import 'http_data/vehicle_response.dart';
 
-class HttpCommunication {
+class HttpService {
   final Dio dio = GetIt.I<Dio>();
   final DataStorage dataStorage = GetIt.I<DataStorage>();
   bool finishedLoading = false;
 
-  HttpCommunication(){
+  HttpService(){
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (HttpClient client) {
       client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
       return client;

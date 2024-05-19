@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hf/http_communication.dart';
+import 'package:flutter_hf/http_service.dart';
 import 'package:get_it/get_it.dart';
 
 import 'main_page.dart';
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    GetIt.I<HttpCommunication>().startLoading().then((value) => {
+    GetIt.I<HttpService>().startLoading().then((value) => {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (_) => const HomePage("Main page")))
         });

@@ -1,4 +1,4 @@
-import 'package:flutter_hf/http_communication.dart';
+import 'package:flutter_hf/http_service.dart';
 import 'package:flutter_hf/http_data/data/planet.dart';
 import 'package:flutter_hf/http_data/data/species.dart';
 import 'package:flutter_hf/http_data/data/starship.dart';
