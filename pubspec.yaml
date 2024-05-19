@@ -72,6 +72,12 @@ flutter:
     - assets/4.png
     - assets/5.png
     - assets/6.png
+    - assets/C-3PO.png
+    - assets/DarthVader.png
+    - assets/HanSolo.png
+    - assets/LeiaOrgana.png
+    - assets/LukeSkywalker.png
+    - assets/R2-D2.png
   fonts:
     - family: 'StarWarsFont'
       fonts:

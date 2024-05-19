@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hf/http_service.dart';
 import 'package:flutter_hf/http_data/data_storage.dart';
-import 'package:flutter_hf/pages/splash_screen.dart';
+import 'package:flutter_hf/pages/main_page.dart';
+import 'package:flutter_hf/providers/swapi_provider.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   GetIt.I.registerSingleton<Dio>(Dio());
@@ -17,21 +19,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Star Wars Characters',
-      theme: ThemeData(
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        // useMaterial3: true,
-        primaryColor: Colors.white,
-        fontFamily: 'StarWarsFont',
-        textTheme: const TextTheme(
-            bodyLarge: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
-            bodyMedium: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-            bodySmall: TextStyle(color: Colors.white, fontSize: 14)
-
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => SwapiProvider(GetIt.I<HttpService>()),
         ),
+      ],
+      child: MaterialApp(
+        title: 'Star Wars Characters',
+        theme: ThemeData(
+          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          // useMaterial3: true,
+          primaryColor: Colors.white,
+          fontFamily: 'StarWarsFont',
+          textTheme: const TextTheme(
+              bodyLarge: TextStyle(
+                  color: Colors.white,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold),
+              bodyMedium: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+              bodySmall: TextStyle(color: Colors.white, fontSize: 14)),
+        ),
+        home: const HomePage(),
       ),
-      home: const SplashScreen(),
     );
   }
 }
