@@ -1,8 +1,6 @@
 import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/http_data/data/movie.dart';
 
-import '../data_storage.dart';
-
 class Planet {
   String? name;
   String? rotationPeriod;
@@ -54,49 +52,27 @@ class Planet {
     residents = [];
     filmsUrls = json['films'].cast<String>();
     films = [];
-
-    // if (json['residents'] != null) {
-    //   residents = [];
-    //   json['films'].forEach((v) {
-    //     if(DataStorage().characters.isEmpty){
-    //       //get all characters
-    //     }
-    //     residents?.add(DataStorage().characters.firstWhere((element) => element.url == v));
-    //   });
-    // }
-    //
-    // if (json['films'] != null) {
-    //   films = [];
-    //   json['films'].forEach((v) {
-    //     if(DataStorage().movies.isEmpty){
-    //       //get all characters
-    //     }
-    //     films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
-    //   });
-    // }
-
-
     created = json['created'];
     edited = json['edited'];
     url = json['url'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['rotation_period'] = this.rotationPeriod;
-    data['orbital_period'] = this.orbitalPeriod;
-    data['diameter'] = this.diameter;
-    data['climate'] = this.climate;
-    data['gravity'] = this.gravity;
-    data['terrain'] = this.terrain;
-    data['surface_water'] = this.surfaceWater;
-    data['population'] = this.population;
-    data['residents'] = this.residents;
-    data['films'] = this.films;
-    data['created'] = this.created;
-    data['edited'] = this.edited;
-    data['url'] = this.url;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['rotation_period'] = rotationPeriod;
+    data['orbital_period'] = orbitalPeriod;
+    data['diameter'] = diameter;
+    data['climate'] = climate;
+    data['gravity'] = gravity;
+    data['terrain'] = terrain;
+    data['surface_water'] = surfaceWater;
+    data['population'] = population;
+    data['residents'] = residents;
+    data['films'] = films;
+    data['created'] = created;
+    data['edited'] = edited;
+    data['url'] = url;
     return data;
   }
 }

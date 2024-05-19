@@ -1,11 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/http_data/data/planet.dart';
 import 'package:flutter_hf/http_data/data/species.dart';
 import 'package:flutter_hf/http_data/data/starship.dart';
 import 'package:flutter_hf/http_data/data/vehicle.dart';
-import 'package:flutter_hf/http_data/data_storage.dart';
 
 class Movie {
   String? title;

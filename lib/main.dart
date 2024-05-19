@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hf/http_service.dart';
-import 'package:flutter_hf/http_data/data_storage.dart';
 import 'package:flutter_hf/pages/main_page.dart';
 import 'package:flutter_hf/providers/swapi_provider.dart';
 import 'package:get_it/get_it.dart';
@@ -9,7 +8,6 @@ import 'package:provider/provider.dart';
 
 void main() {
   GetIt.I.registerSingleton<Dio>(Dio());
-  GetIt.I.registerSingleton<DataStorage>(DataStorage());
   GetIt.I.registerSingleton<HttpService>(HttpService());
   runApp(const MyApp());
 }
@@ -28,8 +26,6 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Star Wars Characters',
         theme: ThemeData(
-          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          // useMaterial3: true,
           primaryColor: Colors.white,
           fontFamily: 'StarWarsFont',
           textTheme: const TextTheme(

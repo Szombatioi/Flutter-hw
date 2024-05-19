@@ -23,6 +23,7 @@ class _MoviesPage extends State<MoviesPage> {
 
   @override
   void initState() {
+    super.initState();
     url = widget.url;
 
     final provider = Provider.of<SwapiProvider>(context, listen: false);
@@ -118,7 +119,6 @@ class _MoviesPage extends State<MoviesPage> {
                                     ),
                                     Flexible(
                                       child: Text(
-                                        /*"${info[index - 1][1].length > 15 ? info[index - 1][1].substring(0,15) + "..." : info[index - 1][1]}"*/
                                         info[index - 1][1],
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
@@ -236,15 +236,6 @@ class _MoviesPage extends State<MoviesPage> {
                                                   .textTheme
                                                   .bodyMedium,
                                             ),
-                                            // onTap: () {},
-                                            // trailing: IconButton(
-                                            //   onPressed: () {
-                                            //     print("Navigated");
-                                            //   },
-                                            //   icon:
-                                            //   const Icon(Icons.keyboard_arrow_right),
-                                            //   color: Colors.white,
-                                            // ),
                                           );
                                         },
                                         itemCount:
@@ -290,15 +281,6 @@ class _MoviesPage extends State<MoviesPage> {
                                                   .textTheme
                                                   .bodyMedium,
                                             ),
-                                            // onTap: () {},
-                                            // trailing: IconButton(
-                                            //   onPressed: () {
-                                            //     print("Navigated");
-                                            //   },
-                                            //   icon:
-                                            //   const Icon(Icons.keyboard_arrow_right),
-                                            //   color: Colors.white,
-                                            // ),
                                           );
                                         },
                                         itemCount: provider.vehicles.length + 1,
@@ -343,15 +325,6 @@ class _MoviesPage extends State<MoviesPage> {
                                                   .textTheme
                                                   .bodyMedium,
                                             ),
-                                            // onTap: () {},
-                                            // trailing: IconButton(
-                                            //   onPressed: () {
-                                            //     print("Navigated");
-                                            //   },
-                                            //   icon:
-                                            //   const Icon(Icons.keyboard_arrow_right),
-                                            //   color: Colors.white,
-                                            // ),
                                           );
                                         },
                                         itemCount: provider.species.length + 1,
@@ -381,8 +354,7 @@ class _MoviesPage extends State<MoviesPage> {
     if (movie.episodeId != null) info.add(["Episode", "${movie.episodeId!}"]);
     if (movie.director != null) info.add(["Director", movie.director!]);
     if (movie.producer != null) info.add(["Producer", movie.producer!]);
-    if (movie.releaseDate != null)
-      info.add(["Release date", movie.releaseDate!]);
+    if (movie.releaseDate != null) info.add(["Release date", movie.releaseDate!]);
     return info;
   }
 }

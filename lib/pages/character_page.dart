@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/pages/widgets.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +22,7 @@ class _CharacterPageState extends State<CharacterPage> {
 
   @override
   void initState() {
+    super.initState();
     url = widget.url;
     final provider = Provider.of<SwapiProvider>(context, listen: false);
     character =
@@ -101,8 +100,6 @@ class _CharacterPageState extends State<CharacterPage> {
                           children: [
                             Text(info[index - 1][0]),
                             Text(info[index - 1][1])
-                            // Text(info[index - 1][0]),
-                            // Text(info[index - 1][1])
                           ],
                         ),
                       );
@@ -191,15 +188,6 @@ class _CharacterPageState extends State<CharacterPage> {
                                     starship.name ?? "No name",
                                     style: Theme.of(context).textTheme.bodyMedium,
                                   ),
-                                  // onTap: () {},
-                                  // trailing: IconButton(
-                                  //   onPressed: () {
-                                  //     print("Navigated");
-                                  //   },
-                                  //   icon:
-                                  //   const Icon(Icons.keyboard_arrow_right),
-                                  //   color: Colors.white,
-                                  // ),
                                 );
                               },
                               itemCount: provider.starships.length + 1,
@@ -236,15 +224,6 @@ class _CharacterPageState extends State<CharacterPage> {
                                     vehicle.name ?? "No name",
                                     style: Theme.of(context).textTheme.bodyMedium,
                                   ),
-                                  // onTap: () {},
-                                  // trailing: IconButton(
-                                  //   onPressed: () {
-                                  //     print("Navigated");
-                                  //   },
-                                  //   icon:
-                                  //   const Icon(Icons.keyboard_arrow_right),
-                                  //   color: Colors.white,
-                                  // ),
                                 );
                               },
                               itemCount: provider.vehicles.length + 1,
@@ -281,15 +260,6 @@ class _CharacterPageState extends State<CharacterPage> {
                                     species.name ?? "No name",
                                     style: Theme.of(context).textTheme.bodyMedium,
                                   ),
-                                  // onTap: () {},
-                                  // trailing: IconButton(
-                                  //   onPressed: () {
-                                  //     print("Navigated");
-                                  //   },
-                                  //   icon:
-                                  //   const Icon(Icons.keyboard_arrow_right),
-                                  //   color: Colors.white,
-                                  // ),
                                 );
                               },
                               itemCount: provider.species.length + 1,
@@ -315,17 +285,12 @@ class _CharacterPageState extends State<CharacterPage> {
 
   List<List<String>> getCharacterInfo() {
     List<List<String>> info = [];
-    if (character.height != null)
-      info.add(["Height", "${character.height!} cm"]);
+    if (character.height != null) info.add(["Height", "${character.height!} cm"]);
     if (character.mass != null) info.add(["Mass", "${character.mass!} kg"]);
-    if (character.hairColor != null)
-      info.add(["Hair color", character.hairColor!]);
-    if (character.skinColor != null)
-      info.add(["Skin color", character.skinColor!]);
-    if (character.eyeColor != null)
-      info.add(["Eye color", character.eyeColor!]);
-    if (character.birthYear != null)
-      info.add(["Birth year", character.birthYear!]);
+    if (character.hairColor != null) info.add(["Hair color", character.hairColor!]);
+    if (character.skinColor != null) info.add(["Skin color", character.skinColor!]);
+    if (character.eyeColor != null) info.add(["Eye color", character.eyeColor!]);
+    if (character.birthYear != null) info.add(["Birth year", character.birthYear!]);
     if (character.gender != null) info.add(["Gender", character.gender!]);
     return info;
   }

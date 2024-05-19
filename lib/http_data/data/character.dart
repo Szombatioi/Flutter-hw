@@ -1,9 +1,7 @@
-import 'package:flutter_hf/http_service.dart';
 import 'package:flutter_hf/http_data/data/planet.dart';
 import 'package:flutter_hf/http_data/data/species.dart';
 import 'package:flutter_hf/http_data/data/starship.dart';
 import 'package:flutter_hf/http_data/data/vehicle.dart';
-import 'package:flutter_hf/http_data/data_storage.dart';
 
 import 'movie.dart';
 
@@ -72,58 +70,8 @@ class Character {
     vehicles = [];
     starshipsUrls = json['starships'].cast<String>();
     starships = [];
-
-    //Binding the movies to the character. We need to make sure, that the DataStorage is filled before this!
-    // if (json['films'] != null) {
-    //   movies = [];
-    //   json['films'].forEach((v) {
-    //     if(DataStorage().movies.isEmpty){
-    //       //get all movies
-    //     }
-    //     movies?.add(DataStorage().movies.firstWhere((element) => element.url == v));
-    //   });
-    // }
-    //
-    // if (json['species'] != null) {
-    //   species = [];
-    //   json['species'].forEach((v) {
-    //     if(DataStorage().species.isEmpty){
-    //       //get all species
-    //     }
-    //     species?.add(DataStorage().species.firstWhere((element) => element.url == v));
-    //   });
-    // }
-    //
-    // if (json['vehicles'] != null) {
-    //   vehicles = [];
-    //   json['vehicles'].forEach((v) {
-    //     if(DataStorage().vehicles.isEmpty){
-    //       //get all vehicles
-    //     }
-    //     vehicles?.add(DataStorage().vehicles.firstWhere((element) => element.url == v));
-    //   });
-    // }
-    //
-    // if (json['starships'] != null) {
-    //   starships = [];
-    //   json['starships'].forEach((v) {
-    //     if(DataStorage().starships.isEmpty){
-    //       //get all starships
-    //     }
-    //     starships?.add(DataStorage().starships.firstWhere((element) => element.url == v));
-    //   });
-    // }
     created = json['created'];
     edited = json['edited'];
     url = json['url'];
-
-    // //TODO tegyük át karakteroldalra
-    // information = [];
-    // for (var key in json.keys) {
-    //   var value = json[key];
-    //   if (value != null && value is String && !["created", "edited", "url", "homeworld"].contains(key)) information.add(value);
-    // }
-    // information.add(homeworld!.name!);
-
   }
 }

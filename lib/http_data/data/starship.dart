@@ -1,8 +1,6 @@
 import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/http_data/data/movie.dart';
 
-import '../data_storage.dart';
-
 class Starship {
   String? name;
   String? model;
@@ -66,26 +64,6 @@ class Starship {
     pilots = [];
     filmsUrls = json['films'].cast<String>();
     films = [];
-
-    // if (json['films'] != null) {
-    //   films = [];
-    //   json['films'].forEach((v) {
-    //     if(DataStorage().movies.isEmpty){
-    //       //get all movies
-    //     }
-    //     films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
-    //   });
-    // }
-    //
-    // if (json['pilots'] != null) {
-    //   pilots = [];
-    //   json['pilots'].forEach((v) {
-    //     if(DataStorage().characters.isEmpty){
-    //       //get all movies
-    //     }
-    //     pilots?.add(DataStorage().characters.firstWhere((element) => element.url == v));
-    //   });
-    // }
 
     created = json['created'];
     edited = json['edited'];

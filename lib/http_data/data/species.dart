@@ -1,8 +1,6 @@
 import 'package:flutter_hf/http_data/data/character.dart';
 import 'package:flutter_hf/http_data/data/movie.dart';
 
-import '../data_storage.dart';
-
 class Species {
   String? name;
   String? classification;
@@ -55,27 +53,6 @@ class Species {
     people = [];
     filmsUrls = json['films'].cast<String>();
     films = [];
-
-    // if (json['films'] != null) {
-    //   films = [];
-    //   json['films'].forEach((v) {
-    //     if(DataStorage().movies.isEmpty){
-    //       //get all movies
-    //     }
-    //     films?.add(DataStorage().movies.firstWhere((element) => element.url == v));
-    //   });
-    // }
-    //
-    // if (json['people'] != null) {
-    //   people = [];
-    //   json['people'].forEach((v) {
-    //     if(DataStorage().characters.isEmpty){
-    //       //get all movies
-    //     }
-    //     people?.add(DataStorage().characters.firstWhere((element) => element.url == v));
-    //   });
-    // }
-
     created = json['created'];
     edited = json['edited'];
     url = json['url'];
